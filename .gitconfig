@@ -1,0 +1,10 @@
+[alias]
+    info = remote show origin
+    ci = commit
+    st = status -sb
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+[push]
+    default = simple
