@@ -1,4 +1,4 @@
-autocmd!
+au!
 execute pathogen#infect()
 execute pathogen#helptags()
 
@@ -7,13 +7,15 @@ execute pathogen#helptags()
 " CORE EDITING SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set background=dark
+colorscheme delek
 set nocompatible
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set autoindent
-set cindent " replaceing smartindent because of some weird stuff with # symbols
+set cindent " replacing smartindent because of some weird stuff with # symbols
 set laststatus=2
 set backspace=indent,eol,start
 set number
@@ -22,10 +24,9 @@ set showmatch
 set incsearch
 set hlsearch
 set ignorecase smartcase
-"set cursorline
 set cmdheight=1
 set switchbuf=useopen
-set winwidth=79
+set colorcolumn=80
 set shell=bash
 set scrolloff=3
 set showcmd
@@ -35,62 +36,69 @@ syntax on
 filetype plugin on
 filetype indent on
 
+" Turn backup off
+set nobackup
+set nowb
+set noswapfile
+highlight Search cterm=NONE ctermfg=white  ctermbg=red
+set whichwrap+=<,>,h,l
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colorscheme
+" AUTOCOMMANDS (on write)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set background=dark
-"colorscheme solarized
-colorscheme delek
+au BufWritePre * :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre * :retab        " convert tabs to spaces
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
-" NERDtree
-map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_python_checkers = ['pep8']
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " vim-airline
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 function! AirlineInit()
-    let g:airline_section_b = airline#section#create(['branch'])
-    let g:airline_section_c = '%<%t%m'
+    " disable those wonky arrows - the don't look right without special fonts
+    let g:airline_left_sep = ''
+    let g:airline_right_sep = ''
     let g:airline_section_warning = airline#section#create(['syntastic'])
+    "let g:airline_section_y = ''  " don't care about encoding
+    let g:airline_theme = 'powerlineish'
 endfunction
-autocmd VimEnter * if exists(':AirlineToggle') | call AirlineInit()
-
+au VimEnter * if exists(':AirlineToggle') | call AirlineInit()
 
 " vim-cljfmt
 let g:clj_fmt_autosave = 1
 
+" vim-rainbow-parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LANGUAGES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-au Filetype html setlocal sw=2 ts=2 sts=2
-au Filetype less setlocal sw=2 ts=2 sts=2
+" Python
+" write then run
+au Filetype python nmap <c-r> :w \| !python % \| more<cr>
 
 
 " Clojure
-au Filetype clojure nmap <c-c><c-k> :Require<cr>
+au Filetype clojure nmap <c-r> :w \| !lein exec % \| more<cr>
 au Filetype clojure let g:clojure_fuzzy_indent = 1
 au Filetype clojure let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
-au BufNewFile,BufRead *.edn set filetype=clojure
-au Filetype clojure autocmd BufWritePre * :%s/\s\+$//e
+au Filetype clojure set tabstop=2
+au BufNewFile,BufRead *.clj set filetype=clojure
 function! TestToplevel() abort
     "Eval the toplevel clojure form (a deftest) and then test-var the
     "result."
@@ -103,12 +111,3 @@ function! TestToplevel() abort
     return result
 endfunction
 au Filetype clojure nmap <c-c><c-t> :call TestToplevel()<cr>
-
-
-" Go
-au Filetype go noexpandtab
-au BufWritePre *.go :silent Fmt
-
-
-" YAML
-au Filetype yaml set tabstop=2 shiftwidth=2
