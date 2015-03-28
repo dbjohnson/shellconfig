@@ -72,7 +72,7 @@ function! AirlineInit()
     let g:airline_right_sep = ''
     let g:airline_section_warning = airline#section#create(['syntastic'])
     "let g:airline_section_y = ''  " don't care about encoding
-    let g:airline_theme = 'powerlineish'
+    "let g:airline_theme = 'powerlineish'
 endfunction
 au VimEnter * if exists(':AirlineToggle') | call AirlineInit()
 

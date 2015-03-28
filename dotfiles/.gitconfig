@@ -9,7 +9,8 @@
 [push]
     default = simple
 [user]
-	name = Bryan Johnson
+	name = dbjohnson
+	email = d.bryan.johnson@gmail.com
 [filter "media"]
 	required = true
 	clean = git media clean %f
