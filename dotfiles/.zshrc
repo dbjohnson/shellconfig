@@ -11,10 +11,22 @@ export ZSH=~/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 source ~/.bash_profile
 
-look_for_process() {
+# function that cd's into a directory and then immediately prints the contents of that directory
+function cs(){
+    cd $1 && ls
+}
+
+lfp() {  # look for process
     local ps_name=$1
     ps aux | grep -v grep | grep $ps_name
 }
 
-alias lfp='look_for_process'
-#RPROMPT='[%D{%L:%M:%S %p}]'
+
+# bind keys for ctrl up/down/left to up/back/forward in directories
+alias ↩="pushd -q +1"
+alias ↪="pushd -q -1"
+alias ↑\="cd .."
+bindkey -s '^u' "↑\n"
+bindkey -s '^b' "↩\n"
+bindkey -s '^f' "↪\n"
+alias u="cd .."
