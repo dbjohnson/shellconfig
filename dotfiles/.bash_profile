@@ -13,6 +13,7 @@ alias gh="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 alias gis="git status"
 alias gid="git diff"
 alias gic="git commit -am"
+alias gicu="git reset --hard HEAD~1"
 alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 

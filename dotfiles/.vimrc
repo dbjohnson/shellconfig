@@ -43,6 +43,9 @@ set noswapfile
 highlight Search cterm=NONE ctermfg=white  ctermbg=red
 set whichwrap+=<,>,h,l
 
+" clipboard integration
+set clipboard=unnamed
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AUTOCOMMANDS (on write)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -74,6 +77,12 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = {
+		\ "mode": "active",
+		\ "active_filetypes": ["python"],
+		\ "passive_filetypes": [""] }
+" close error window on file close
+:autocmd WinEnter * if &buftype ==# 'quickfix' && winnr('$') == 1 | quit | endif
 
 " vim-airline
 let g:airline_powerline_fonts = 0
