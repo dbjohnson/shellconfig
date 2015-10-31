@@ -55,7 +55,7 @@ au BufWritePre * :retab        " convert tabs to spaces
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-Slime
 let g:slime_python_ipython = 1
-let b:slime_default_config = {"sessionname": "repl", "windowname": "0"}
+let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 
 
 " YouCompleteMe
