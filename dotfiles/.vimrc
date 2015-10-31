@@ -10,7 +10,6 @@ execute pathogen#helptags()
 set background=dark
 colorscheme delek
 set nocompatible
-set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -32,6 +31,7 @@ set scrolloff=3
 set showcmd
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set nofoldenable
 syntax on
 filetype plugin on
 filetype indent on
@@ -53,12 +53,23 @@ au BufWritePre * :retab        " convert tabs to spaces
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim-Slime
+let g:slime_python_ipython = 1
+let b:slime_default_config = {"sessionname": "repl", "windowname": "0"}
+
+
+" YouCompleteMe
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+let g:ycm_autoclose_preview_window_after_completion=1
+highlight Pmenu ctermfg=2 ctermbg=17
+
 
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_python_checkers = ['pep8']
+let g:syntastic_python_checkers = ['flake8', 'pep8']
+let g:syntastic_python_checker_args="--ignore=E501,W601"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
@@ -67,12 +78,11 @@ let g:syntastic_check_on_wq = 0
 " vim-airline
 let g:airline_powerline_fonts = 0
 function! AirlineInit()
-    " disable those wonky arrows - the don't look right without special fonts
-    let g:airline_left_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_section_warning = airline#section#create(['syntastic'])
-    "let g:airline_section_y = ''  " don't care about encoding
-    "let g:airline_theme = 'powerlineish'
+" disable those wonky arrows - the don't look right without special fonts
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_section_warning = airline#section#create(['syntastic'])
+"let g:airline_section_y = ''  " don't care about encoding
 endfunction
 au VimEnter * if exists(':AirlineToggle') | call AirlineInit()
 
@@ -85,13 +95,27 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LANGUAGES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python
 " write then run
-au Filetype python nmap <c-r> :w \| !python % \| more<cr>
+au Filetype python nmap <c-p> :w \| !python % \| more<cr>
+" Define the current compiler
+if exists("compiler")
+finish
+endif
+let compiler = "python"
 
+" Set python as the make program and
+setlocal makeprg=python
+setlocal errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+
+" When writing Python file check the syntax
+autocmd BufWritePost *.py call Flake8()
+
+autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 
 " Clojure
 au Filetype clojure nmap <c-r> :w \| !lein exec % \| more<cr>
@@ -111,3 +135,5 @@ function! TestToplevel() abort
     return result
 endfunction
 au Filetype clojure nmap <c-c><c-t> :call TestToplevel()<cr>
+
+

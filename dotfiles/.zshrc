@@ -3,6 +3,9 @@ ZSH_THEME="ys"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
+setopt no_share_history
+unsetopt inc_append_history
+unsetopt share_history
 plugins=(git, brew, python, pip)
 
 export EDITOR=vim
@@ -17,10 +20,12 @@ function cs(){
 }
 
 lfp() {  # look for process
-    local ps_name=$1
-    ps aux | grep -v grep | grep $ps_name
+    ps aux | grep -v grep | grep $1
 }
 
+kp() { # kill process
+    kill $(ps aux | grep '$1' | awk '{print $2}')
+}
 
 # bind keys for ctrl up/down/left to up/back/forward in directories
 alias ↩="pushd -q +1"

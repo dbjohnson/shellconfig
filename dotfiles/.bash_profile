@@ -4,13 +4,21 @@ alias grep="grep --color"
 alias rm="rm -f"
 alias ls="ls -lah"
 alias find="find 2>/dev/null"
+alias vi="vim"
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias ipython="ipython --colors=linux"
+
+
 alias gh="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gis="git status"
 alias gid="git diff"
 alias gic="git commit -am"
-alias gip="git push"
+alias gipo="git checkout master; git pull origin master"
+alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 
-export PATH=~/anaconda/bin:$PATH
+
+export PYTHONSTARTUP="$HOME/.pythonrc"
+source $HOME/.credentials
 
 # added by Anaconda 2.1.0 installer
 export PATH="/Users/bryan/anaconda/bin:$PATH"
@@ -18,6 +26,6 @@ export PATH="/Users/bryan/anaconda/bin:$PATH"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-export PYTHONSTARTUP="$HOME/.pythonrc"
+export REX_APSIM_WORKDIR=/Users/bryan/Desktop/rex
+eval "$(docker-machine env default)"
 
-source $HOME/.credentials
