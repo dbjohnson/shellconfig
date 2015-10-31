@@ -18,7 +18,6 @@ set cindent " replacing smartindent because of some weird stuff with # symbols
 set laststatus=2
 set backspace=indent,eol,start
 set number
-set laststatus=2
 set showmatch
 set incsearch
 set hlsearch
@@ -62,7 +61,7 @@ let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 
 
 " YouCompleteMe
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/ipython'
 let g:ycm_autoclose_preview_window_after_completion=1
 highlight Pmenu ctermfg=2 ctermbg=17
 
@@ -71,16 +70,12 @@ highlight Pmenu ctermfg=2 ctermbg=17
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_python_checkers = ['flake8', 'pep8']
-let g:syntastic_python_checker_args="--ignore=E501,W601"
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args="--ignore=E501,W601"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = {
-		\ "mode": "active",
-		\ "active_filetypes": ["python"],
-		\ "passive_filetypes": [""] }
 " close error window on file close
 :autocmd WinEnter * if &buftype ==# 'quickfix' && winnr('$') == 1 | quit | endif
 
