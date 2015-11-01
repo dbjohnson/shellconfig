@@ -58,13 +58,12 @@ au BufWritePre * :retab        " convert tabs to spaces
 " Vim-Slime
 let g:slime_python_ipython = 1
 let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
-
+"let g:slime_target = "tmux"
 
 " YouCompleteMe
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/ipython'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
 highlight Pmenu ctermfg=2 ctermbg=17
-
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -73,11 +72,11 @@ set statusline+=%*
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args="--ignore=E501,W601"
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-" close error window on file close
-:autocmd WinEnter * if &buftype ==# 'quickfix' && winnr('$') == 1 | quit | endif
+let g:syntastic_auto_jump = 1
+let g:syntastic_loc_list_height = 3
 
 " vim-airline
 let g:airline_powerline_fonts = 0
@@ -115,9 +114,6 @@ let compiler = "python"
 " Set python as the make program and
 setlocal makeprg=python
 setlocal errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-
-" When writing Python file check the syntax
-autocmd BufWritePost *.py call Flake8()
 
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 
