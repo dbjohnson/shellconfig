@@ -39,17 +39,12 @@ filetype indent on
 set nobackup
 set nowb
 set noswapfile
+highlight ColorColumn ctermbg=17
 highlight Search cterm=NONE ctermfg=white  ctermbg=red
 set whichwrap+=<,>,h,l
 
 " clipboard integration
 set clipboard=unnamed
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" AUTOCOMMANDS (on write)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufWritePre * :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre * :retab        " convert tabs to spaces
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -57,8 +52,10 @@ au BufWritePre * :retab        " convert tabs to spaces
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-Slime
 let g:slime_python_ipython = 1
-let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
-"let g:slime_target = "tmux"
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
+"let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
+""some keybindings don't work properly in a screen
 
 " YouCompleteMe
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
@@ -75,7 +72,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_auto_jump = 1
+"let g:syntastic_auto_jump = 1
 let g:syntastic_loc_list_height = 3
 
 " vim-airline
@@ -89,36 +86,23 @@ let g:airline_section_warning = airline#section#create(['syntastic'])
 endfunction
 au VimEnter * if exists(':AirlineToggle') | call AirlineInit()
 
-" vim-cljfmt
-let g:clj_fmt_autosave = 1
-
 " vim-rainbow-parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LANGUAGES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python
-" write then run
-au Filetype python nmap <c-p> :w \| !python % \| more<cr>
-" Define the current compiler
-if exists("compiler")
-finish
-endif
-let compiler = "python"
-
-" Set python as the make program and
-setlocal makeprg=python
-setlocal errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-
+au BufWritePre *.py :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre *.py :retab        " convert tabs to spaces
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 
 " Clojure
-au Filetype clojure nmap <c-r> :w \| !lein exec % \| more<cr>
+au Filetype clojure nmap <c-c><c-r> :w \| !lein exec % \| more<cr>
 au Filetype clojure let g:clojure_fuzzy_indent = 1
 au Filetype clojure let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 au Filetype clojure set tabstop=2
@@ -135,5 +119,13 @@ function! TestToplevel() abort
     return result
 endfunction
 au Filetype clojure nmap <c-c><c-t> :call TestToplevel()<cr>
+let g:clj_fmt_autosave = 1
 
 
+function! Tabfix()
+  :set ts=2 sts=2 noet
+  :retab!
+  :set ts=4 sts=4 et
+  :retab
+endfunction
+nnoremap <leader>tab :call Tabfix()<cr>

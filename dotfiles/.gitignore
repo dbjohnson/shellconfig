@@ -1,1 +1,3 @@
 .ipython
+.DS_Store
+*.pyc
