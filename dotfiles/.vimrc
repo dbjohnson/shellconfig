@@ -81,7 +81,7 @@ let g:syntastic_loc_list_height = 3
 " vim-airline
 let g:airline_powerline_fonts = 0
 function! AirlineInit()
-" disable those wonky arrows - the don't look right without special fonts
+" disable those wonky arrows - they don't look right without special fonts
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_section_warning = airline#section#create(['syntastic'])
@@ -90,11 +90,27 @@ endfunction
 au VimEnter * if exists(':AirlineToggle') | call AirlineInit()
 
 " vim-rainbow-parentheses
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 13
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LANGUAGES
