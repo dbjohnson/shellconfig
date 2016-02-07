@@ -60,7 +60,10 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
 " YouCompleteMe
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 highlight Pmenu ctermfg=2 ctermbg=17
+au Filetype python nmap <leader>d :YcmCompleter GoToDefinition<cr> 
+au Filetype python nmap <leader>h :YcmCompleter GetDoc<cr><c-w><c-w>
 
 " syntastic
 set statusline+=%#warningmsg#
