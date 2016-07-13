@@ -57,12 +57,8 @@ alias u="cd .."
 
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
-source $HOME/.credentials
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
 export PATH="/usr/local/bin:$PATH"
+source $HOME/.credentials
 
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
