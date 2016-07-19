@@ -40,21 +40,23 @@ set nobackup
 set nowb
 set noswapfile
 highlight ColorColumn ctermbg=17
-highlight Search cterm=NONE ctermfg=white  ctermbg=red
+highlight Search cterm=NONE ctermfg=white  ctermbg=blue
 set whichwrap+=<,>,h,l
 
 " clipboard integration
 set clipboard=unnamed
 
+" map f to grep for word under cursor
+nnoremap f :grep! -r '\b<cword>\b' .<CR>:cw<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-Slime
 let g:slime_python_ipython = 1
-let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
-"let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
+"let g:slime_target = "tmux"
+"let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
+let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 ""some keybindings don't work properly in a screen
 
 " YouCompleteMe
@@ -77,6 +79,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_auto_jump = 1
 let g:syntastic_loc_list_height = 3
+let g:syntastic_disabled_filetypes=['html']
 
 " vim-airline
 let g:airline_powerline_fonts = 0
@@ -111,6 +114,25 @@ let g:rbpt_colorpairs = [
     \ ['red',         'firebrick3'],
     \ ]
 let g:rbpt_max = 13
+
+"ctrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_user_command = 'find %s -type f'
+
+
+" silver searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LANGUAGES
@@ -148,3 +170,7 @@ function! Tabfix()
   :retab
 endfunction
 nnoremap <leader>tab :call Tabfix()<cr>
+
+" HTML"	
+au FileType html setl sw=2 sts=2 et
+au FileType js setl sw=2 sts=2 et

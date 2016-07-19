@@ -6,7 +6,13 @@ alias ls="ls -lah"
 alias find="find 2>/dev/null"
 alias vi="vim"
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias weather="curl http://wttr.in/ann%20arbor"
+alias moon="curl http://wttr.in/moon"
+alias fortune="fortune|ponysay"
 
+function random {
+	openssl rand -base64 $1
+}
 
 # git
 alias gh="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
@@ -17,9 +23,15 @@ alias gicu="git reset HEAD^"
 alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 
+alias docker-reset="docker-machine rm -f default; docker-machine create --driver virtualbox default; eval $(docker-machine env default)"
+
 # kubernetes
-alias kubelist="kubectl get po -L app -L worker -L role -l kubinator=true"
+alias kubelist="kubectl get po -L app -L worker -L role"
 alias kubecurl="kubectl exec curlpod -- curl"
+
+function kubekill {
+	kubectl delete deployments,po,rc -l app="$1"
+}
 
 function kubepod {
     kubelist | grep "$1.*$2" | cut -f1 -d' '
@@ -34,7 +46,7 @@ function kubeconfig {
 }
 
 # convenience funcs
-function cs(){
+function cs(){ 
     cd $1 && ls
 }
 
@@ -58,9 +70,6 @@ alias u="cd .."
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
 source $HOME/.credentials
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
 
 export PATH="/usr/local/bin:$PATH"
 
