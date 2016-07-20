@@ -74,7 +74,6 @@ export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 source $HOME/.credentials
 
-
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 workon scipy
