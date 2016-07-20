@@ -23,7 +23,9 @@ alias gicu="git reset HEAD^"
 alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 
-alias docker-reset="docker-machine rm -f default; docker-machine create --driver virtualbox default; eval $(docker-machine env default)"
+function docker-reset {
+	docker-machine rm -f default; docker-machine create --driver virtualbox default; eval $(docker-machine env default)
+}
 
 # kubernetes
 alias kubelist="kubectl get po -L app -L worker -L role"
@@ -68,10 +70,10 @@ bindkey -s '^f' "↪\n"
 alias u="cd .."
 
 # path, etc
+export PATH="/usr/local/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 source $HOME/.credentials
 
-export PATH="/usr/local/bin:$PATH"
 
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
