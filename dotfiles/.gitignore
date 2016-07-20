@@ -1,4 +1,4 @@
-.ipython
 .DS_Store
+.ipython
 *.pyc
 .lein-repl-history
