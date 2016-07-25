@@ -47,10 +47,11 @@ set whichwrap+=<,>,h,l
 set clipboard=unnamed
 
 " map f to grep for word under cursor
-nnoremap f :grep! -r '\b<cword>\b' .<Bar> cw<CR><CW>
+nnoremap f :grep! -r '\b<cword>\b' . <Bar> cw <CR><CR>
+
 
 " close location and quick-fix windows automatically on close
-" au QuitPre * exe "lclose|cclose"
+au QuitPre * exe "lclose|cclose"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -127,7 +128,7 @@ let g:ctrlp_user_command = 'find %s -type f'
 " silver searcher
 if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
