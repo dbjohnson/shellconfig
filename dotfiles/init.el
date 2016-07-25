@@ -30,6 +30,7 @@
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 
+(when window-system (set-frame-size (selected-frame) 120 60))
 (setq inhibit-startup-message t) ;; hide the startup message
 (load-theme 'material t) ;; load material theme
 (global-linum-mode t) ;; enable line numbers globally
@@ -38,7 +39,7 @@
 ;; --------------------------------------
 
 (elpy-enable)
-(evil-mode 1)
+;; (evil-mode 1)
 
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)  

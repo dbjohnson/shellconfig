@@ -47,7 +47,10 @@ set whichwrap+=<,>,h,l
 set clipboard=unnamed
 
 " map f to grep for word under cursor
-nnoremap f :grep! -r '\b<cword>\b' .<CR>:cw<CR>
+nnoremap f :grep! -r '\b<cword>\b' .<Bar> cw<CR><CW>
+
+" close location and quick-fix windows automatically on close
+" au QuitPre * exe "lclose|cclose"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
