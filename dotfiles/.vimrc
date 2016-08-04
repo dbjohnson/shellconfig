@@ -50,9 +50,6 @@ set clipboard=unnamed
 nnoremap f :grep! -r '\b<cword>\b' . <Bar> cw <CR><CR>
 
 
-" close location and quick-fix windows automatically on close
-au QuitPre * exe "lclose|cclose"
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
