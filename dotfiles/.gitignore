@@ -2,3 +2,4 @@
 .ipython
 *.pyc
 .lein-repl-history
+build/*
