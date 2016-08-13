@@ -70,8 +70,6 @@ bindkey -s '^b' "↩\n"
 bindkey -s '^f' "↪\n"
 alias u="cd .."
 
-source $HOME/.credentials
-
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 export WORKON_HOME=$HOME/.virtualenvs
@@ -81,3 +79,11 @@ workon scipy
 # path, etc
 export PATH=".:/usr/local/bin:$PATH"
 export PATH="$PATH:/usr/local/spark/bin"
+
+# local credentials
+CREDSFILE=$HOME/.credentials
+if [ -f $CREDSFILE ]
+then
+	source $CREDSFILE 
+fi
+
