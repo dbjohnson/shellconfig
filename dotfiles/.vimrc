@@ -83,8 +83,8 @@ let g:syntastic_loc_list_height = 3
 let g:syntastic_disabled_filetypes=['html']
 
 " vim-airline
-let g:airline_powerline_fonts = 0
 function! AirlineInit()
+let g:airline_powerline_fonts = 0
 " disable those wonky arrows - they don't look right without special fonts
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
@@ -172,6 +172,6 @@ function! Tabfix()
 endfunction
 nnoremap <leader>tab :call Tabfix()<cr>
 
-" HTML"	
+" HTML
 au FileType html setl sw=2 sts=2 et
 au FileType js setl sw=2 sts=2 et
