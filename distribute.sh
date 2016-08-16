@@ -2,7 +2,11 @@
 
 dir=$PWD
 cd ~/
-ln -s $dir/dotfiles/.* .
-ln -s $dir/dotfiles/ipython_config .ipython/profile_default/
-ln -s $dir/dotfiles/matplotlibrc .matplotlib/
+
+for f in "$dir/dotfiles/".[a-z]*
+do
+    ln -s -f "$f" .
+done
+ln -s -f "$dir/dotfiles/ipython_config.py" .ipython/profile_default/
+ln -s -f "$dir/dotfiles/matplotlibrc" .matplotlib/
 
