@@ -78,7 +78,7 @@ export PATH="$PATH:/usr/local/spark/bin"
 # virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
-workon scipy
+workon scipy3
 
 # local credentials
 CREDSFILE=$HOME/.credentials
