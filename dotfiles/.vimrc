@@ -64,6 +64,7 @@ let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 highlight Pmenu ctermfg=2 ctermbg=17
 au Filetype python nmap <leader>d :YcmCompleter GoToDefinition<cr> 
 au Filetype python nmap <leader>h :YcmCompleter GetDoc<cr><c-w><c-w>
@@ -84,14 +85,15 @@ let g:syntastic_disabled_filetypes=['html']
 
 " vim-airline
 function! AirlineInit()
-let g:airline_powerline_fonts = 0
-" disable those wonky arrows - they don't look right without special fonts
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_section_warning = airline#section#create(['syntastic'])
-"let g:airline_section_y = ''  " don't care about encoding
+	let g:airline_powerline_fonts = 0
+	" disable those wonky arrows - they don't look right without special fonts
+	let g:airline_left_sep = ''
+	let g:airline_right_sep = ''
+	let g:airline_section_warning = airline#section#create(['syntastic'])
+	let g:airline_exclude_preview = 1
+	let g:airline_section_y = ''  " don't care about encoding
 endfunction
-au VimEnter * if exists(':AirlineToggle') | call AirlineInit()
+autocmd User AirlineAfterInit call AirlineInit()
 
 " vim-rainbow-parentheses
 au VimEnter * RainbowParenthesesToggle
