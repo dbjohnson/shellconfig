@@ -10,6 +10,7 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias scala="amm"
+alias mkvirtualenv="mkvirtualenv --python=`which python3`"
 
 function random {
 	openssl rand -base64 $1
@@ -72,6 +73,7 @@ alias u="cd .."
 
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
+export PYTHONPATH=".:$PYTHONPATH"
 export PATH=".:/usr/local/bin:$PATH"
 export PATH="$PATH:/usr/local/spark/bin"
 
