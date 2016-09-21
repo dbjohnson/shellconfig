@@ -62,14 +62,13 @@ kp() { # kill process
 	kill $(ps aux | grep -v grep | grep $1 | awk '{print $2}') 
 }
 
-# bind keys for ctrl up/down/left to up/back/forward in directories
-alias ↩="pushd -q +1"
-alias ↪="pushd -q -1"
-alias ↑\="cd .."
-bindkey -s '^u' "↑\n"
-bindkey -s '^b' "↩\n"
-bindkey -s '^f' "↪\n"
-alias u="cd .."
+
+function ssh-send-key {
+	pubkey=$1
+	host=$2
+
+	ssh $host 'test -d $HOME/.ssh || mkdir -m 0700 $HOME/.ssh && test -f $HOME/.ssh/authorized_keys || touch $HOME/.ssh/authorized_keys; chmod 600 $HOME/.ssh/authorized_keys && cat >>$HOME/.ssh/authorized_keys' <$pubkey
+}
 
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
@@ -80,7 +79,7 @@ export PATH="$PATH:/usr/local/spark/bin"
 # virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
-workon scipy3
+workon pathology
 
 # local credentials
 CREDSFILE=$HOME/.credentials
