@@ -29,26 +29,6 @@ function docker-reset {
 	docker-machine rm -f default; docker-machine create --driver virtualbox default; eval $(docker-machine env default)
 }
 
-# kubernetes
-alias kubelist="kubectl get po -L app -L worker -L role"
-alias kubecurl="kubectl exec curlpod -- curl"
-
-function kubekill {
-	kubectl delete deployments,po,rc -l app="$1"
-}
-
-function kubepod {
-    kubelist | grep "$1.*$2" | cut -f1 -d' '
-}
-
-function kubelogs {
-    kubectl logs -f $(kubepod $1 $2)
-}
-
-function kubeconfig {
-    kubectl get po $(kubepod $1 $2) -o yaml
-}
-
 # convenience funcs
 function cs(){ 
     cd $1 && ls
@@ -79,7 +59,7 @@ export PATH="$PATH:/usr/local/spark/bin"
 # virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
-workon pathology
+workon scipy3
 
 # local credentials
 CREDSFILE=$HOME/.credentials

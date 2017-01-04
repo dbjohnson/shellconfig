@@ -31,6 +31,7 @@ set showcmd
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set nofoldenable
+
 syntax on
 filetype plugin on
 filetype indent on
@@ -41,6 +42,8 @@ set nowb
 set noswapfile
 highlight ColorColumn ctermbg=17
 highlight Search cterm=NONE ctermfg=white  ctermbg=blue
+highlight Error cterm=NONE ctermbg=darkred ctermfg=yellow
+highlight SpellBad cterm=NONE ctermbg=darkred ctermfg=yellow
 set whichwrap+=<,>,h,l
 
 " clipboard integration
@@ -174,6 +177,12 @@ function! Tabfix()
 endfunction
 nnoremap <leader>tab :call Tabfix()<cr>
 
-" HTML
-au FileType html setl sw=2 sts=2 et
-au FileType js setl sw=2 sts=2 et
+" HTML, js
+au BufWritePre *.js :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre *.js :retab        " convert tabs to spaces
+autocmd FileType javascript set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
+
+au BufWritePre *.html :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre *.html :retab        " convert tabs to spaces
+autocmd FileType html set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
+autocmd FileType htmldjango set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
