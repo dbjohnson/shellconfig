@@ -6,6 +6,7 @@ alias ls="ls -lah"
 alias find="find 2>/dev/null"
 alias vi="vim"
 alias vim="mvim -v"
+alias diff="diff --side-by-side --suppress-common-lines"
 alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
@@ -24,6 +25,15 @@ alias gic="git commit -am"
 alias gicu="git reset HEAD^"
 alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
+alias gp="pull"
+
+function pull() {
+	git pull origin `git rev-parse --abbrev-ref HEAD`
+}
+
+function push() {
+	git push origin `git rev-parse --abbrev-ref HEAD`
+}
 
 function docker-reset {
 	docker-machine rm -f default; docker-machine create --driver virtualbox default; eval $(docker-machine env default)
