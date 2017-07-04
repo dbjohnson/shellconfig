@@ -6,12 +6,13 @@ alias ls="ls -lah"
 alias find="find 2>/dev/null"
 alias vi="vim"
 alias vim="mvim -v"
-alias diff="diff --side-by-side --suppress-common-lines"
+alias diff="diff --side-by-side --suppress-common-lines --width=200"
 alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias scala="amm"
 alias mkvirtualenv="mkvirtualenv --python=`which python3`"
+alias ipyqt="ipython qtconsole --matplotlib=inline"
 
 function random {
 	openssl rand -base64 $1
