@@ -5,14 +5,12 @@ alias rm="rm -f"
 alias ls="ls -lah"
 alias find="find 2>/dev/null"
 alias vi="vim"
-alias vim="mvim -v"
+alias vim="vim -v"
 alias diff="diff --side-by-side --suppress-common-lines --width=200"
 alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
-alias scala="amm"
-alias mkvirtualenv="mkvirtualenv --python=`which python3`"
-alias ipyqt="ipython qtconsole --matplotlib=inline"
+alias dc="docker-compose"
 
 function random {
 	openssl rand -base64 $1
@@ -27,6 +25,8 @@ alias gicu="git reset HEAD^"
 alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 alias gp="pull"
+# clear out all merged branches
+alias gitpurge='git branch -D `git branch --merged | grep -v \* | xargs`'
 
 function pull() {
 	git pull origin `git rev-parse --abbrev-ref HEAD`
@@ -34,10 +34,6 @@ function pull() {
 
 function push() {
 	git push origin `git rev-parse --abbrev-ref HEAD`
-}
-
-function docker-reset {
-	docker-machine rm -f default; docker-machine create --driver virtualbox default; eval $(docker-machine env default)
 }
 
 # convenience funcs
@@ -61,16 +57,25 @@ function ssh-send-key {
 	ssh $host 'test -d $HOME/.ssh || mkdir -m 0700 $HOME/.ssh && test -f $HOME/.ssh/authorized_keys || touch $HOME/.ssh/authorized_keys; chmod 600 $HOME/.ssh/authorized_keys && cat >>$HOME/.ssh/authorized_keys' <$pubkey
 }
 
+function ipy {
+	if [[ "$1" == "prod" ]]
+	  then
+		export SAPIO_ENV=prod
+		export SAPIO_USER=validationapi
+	fi
+	ipython
+}
+
+
+
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export PYTHONPATH=".:$PYTHONPATH"
 export PATH=".:/usr/local/bin:$PATH"
 export PATH="$PATH:/usr/local/spark/bin"
 
-# virtualenv
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
-workon scipy3
+
+alias activate="source .VENV/bin/activate"
 
 # local credentials
 CREDSFILE=$HOME/.credentials
@@ -78,4 +83,3 @@ if [ -f $CREDSFILE ]
 then
 	source $CREDSFILE 
 fi
-
