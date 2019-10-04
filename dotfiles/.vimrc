@@ -1,6 +1,4 @@
 au!
-execute pathogen#infect()
-execute pathogen#helptags()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -31,6 +29,8 @@ set showcmd
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set nofoldenable
+"set undofile " Maintain undo history between sessions
+"set undodir=~/.vim/undodir
 
 syntax on
 filetype plugin on
@@ -64,7 +64,7 @@ let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 ""some keybindings don't work properly in a screen
 
 " YouCompleteMe
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/python3'
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
@@ -179,10 +179,9 @@ endfunction
 nnoremap <leader>tab :call Tabfix()<cr>
 
 " HTML, js
-au BufWritePre *.js :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.js :retab        " convert tabs to spaces
-au BufWritePre *.jsx :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.jsx :retab        " convert tabs to spaces
+au BufWritePre *.js* :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre *.js* :retab        " convert tabs to spaces
+autocmd FileType json set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
 autocmd FileType javascript set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
 
 au BufWritePre *.html :%s/\s\+$//e  " trim trailing whitespace
