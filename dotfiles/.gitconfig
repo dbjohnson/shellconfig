@@ -33,3 +33,9 @@
 	trustExitCode = true
 [rerere]
 	enabled = true
+[pull]
+	rebase = true
+[http]
+	postBuffer = 1048576000
+[url "git@github.com:"]
+	insteadOf = https://github.com/
