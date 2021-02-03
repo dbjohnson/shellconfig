@@ -11,6 +11,7 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias dc="docker-compose"
+alias python=python3
 
 function random {
 	openssl rand -base64 $1
@@ -83,3 +84,5 @@ if [ -f $CREDSFILE ]
 then
 	source $CREDSFILE 
 fi
+
+eval "$(pyenv init -)"
