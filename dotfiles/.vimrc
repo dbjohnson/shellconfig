@@ -1,4 +1,6 @@
 au!
+execute pathogen#infect()
+execute pathogen#helptags()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -29,8 +31,6 @@ set showcmd
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set nofoldenable
-"set undofile " Maintain undo history between sessions
-"set undodir=~/.vim/undodir
 
 syntax on
 filetype plugin on
@@ -64,7 +64,7 @@ let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 ""some keybindings don't work properly in a screen
 
 " YouCompleteMe
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python3'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
@@ -76,8 +76,9 @@ au Filetype python nmap <leader>h :YcmCompleter GetDoc<cr><c-w><c-w>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+let g:syntastic_python_python_exec = '/usr/local/bin/python3'
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args="--ignore=E501,W601"
+let g:syntastic_python_flake8_args="--ignore=E501,W601,W504,E203,W503 --select=B,BLK,C,E,F,I,S,W"
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -179,12 +180,41 @@ endfunction
 nnoremap <leader>tab :call Tabfix()<cr>
 
 " HTML, js
-au BufWritePre *.js* :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.js* :retab        " convert tabs to spaces
-autocmd FileType json set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
-autocmd FileType javascript set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
+au BufWritePre *.js :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre *.js :retab        " convert tabs to spaces
+au BufWritePre *.jsx :%s/\s\+$//e  " trim trailing whitespace
+au BufWritePre *.jsx :retab        " convert tabs to spaces
+autocmd FileType javascript set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType javascriptreact set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 
 au BufWritePre *.html :%s/\s\+$//e  " trim trailing whitespace
 au BufWritePre *.html :retab        " convert tabs to spaces
-autocmd FileType html set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
-autocmd FileType htmldjango set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set expandtab
+autocmd FileType html set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType htmldjango set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
+
+
+""" NIGHTOWL! 
+""""" install
+
+" install with vim-plug
+"call plug#begin('~/.vim/plugged')
+"Plug 'haishanh/night-owl.vim'
+"call plug#end()
+
+""""" enable 24bit true color
+
+" If you have vim >=8.0 or Neovim >= 0.1.5
+"if (has("termguicolors"))
+" set termguicolors
+"endif
+
+" For Neovim 0.1.3 and 0.1.4
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+""""" enable the theme
+
+syntax enable
+" colorscheme night-owl
+
+" To enable the lightline theme
+"let g:lightline = { 'colorscheme': 'nightowl' }

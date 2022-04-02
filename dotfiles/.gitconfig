@@ -24,7 +24,7 @@
 	smudge = git lfs smudge %f
 	required = true
 [core]
-	excludesFile = ~/.gitignore
+	excludesfile = ~/.gitignore
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 

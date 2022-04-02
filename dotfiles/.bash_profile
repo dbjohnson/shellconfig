@@ -1,5 +1,6 @@
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
+alias python="python3"
 alias grep="grep --color"
 alias rm="rm -f"
 alias ls="ls -lah"
@@ -11,7 +12,14 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias dc="docker-compose"
-alias python=python3
+
+# Strata VPN
+alias vpn="/opt/cisco/anyconnect/bin/vpn"
+
+function vpnup {
+	PSWD=$(security find-generic-password -a ${USER} -s stratavpn -w)
+	printf 'bryan.johnson\n%s\npush' "$PSWD" | vpn -s connect sslvpn.strataoncology.com
+}
 
 function random {
 	openssl rand -base64 $1
@@ -26,8 +34,12 @@ alias gicu="git reset HEAD^"
 alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 alias gp="pull"
+alias reset="git reset --hard @{upstream}"
+
 # clear out all merged branches
 alias gitpurge='git branch -D `git branch --merged | grep -v \* | xargs`'
+# rebase preferring local changes
+alias rebase='git rebase -X theirs'
 
 function pull() {
 	git pull origin `git rev-parse --abbrev-ref HEAD`
@@ -74,6 +86,12 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 export PYTHONPATH=".:$PYTHONPATH"
 export PATH=".:/usr/local/bin:$PATH"
 export PATH="$PATH:/usr/local/spark/bin"
+export PATH="$PATH:/Users/bryan/.cargo/bin"
+
+
+# difftastic
+export GIT_EXTERNAL_DIFF=difft
+
 
 
 alias activate="source .VENV/bin/activate"
@@ -85,4 +103,12 @@ then
 	source $CREDSFILE 
 fi
 
-eval "$(pyenv init -)"
+# let pysam build
+export HTSLIB_CONFIGURE_OPTIONS=--enable-plugins
+
+#eval "$(docker-machine env vbox)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
