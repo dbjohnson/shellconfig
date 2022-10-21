@@ -1,4 +1,4 @@
 axes.grid       : True
 figure.figsize  : 12, 8
-#backend			: TkAgg
-backend			: macosx
+backend			: TkAgg
+#backend			: macosx
