@@ -8,7 +8,7 @@ execute pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set background=dark
-colorscheme delek
+colorscheme night-owl
 set nocompatible
 set tabstop=4
 set shiftwidth=4

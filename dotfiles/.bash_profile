@@ -17,6 +17,9 @@ alias dc="docker-compose"
 alias vpn="/opt/cisco/anyconnect/bin/vpn"
 
 function vpnup {
+	if ! $(security show-keychain-info 2> /dev/null); then
+		security unlock-keychain;
+	fi
 	PSWD=$(security find-generic-password -a ${USER} -s stratavpn -w)
 	printf 'bryan.johnson\n%s\npush' "$PSWD" | vpn -s connect sslvpn.strataoncology.com
 }
@@ -59,9 +62,11 @@ lfp() {  # look for process
 }
 
 kp() { # kill process
-	kill $(ps aux | grep -v grep | grep $1 | awk '{print $2}') 
+	pid=$(lfp $1 | awk 'NR==1{print $2}') 
+	if [ ! -z "$pid" ]; then
+		kill $pid
+	fi
 }
-
 
 function ssh-send-key {
 	pubkey=$1
@@ -70,16 +75,22 @@ function ssh-send-key {
 	ssh $host 'test -d $HOME/.ssh || mkdir -m 0700 $HOME/.ssh && test -f $HOME/.ssh/authorized_keys || touch $HOME/.ssh/authorized_keys; chmod 600 $HOME/.ssh/authorized_keys && cat >>$HOME/.ssh/authorized_keys' <$pubkey
 }
 
-function ipy {
-	if [[ "$1" == "prod" ]]
-	  then
-		export SAPIO_ENV=prod
-		export SAPIO_USER=validationapi
-	fi
-	ipython
+function socks-proxy-mini {
+	networksetup -setsocksfirewallproxy "Wi-Fi" localhost 8080
+	ssh -D 8080 -f -C -q -N bryan@mini.local
+	# not sure why this hangs....
+	timeout 30 ssh -t mini bash -lic vpnup
 }
 
+function socks-open {
+	socks-proxy-mini
+}
 
+function socks-close {
+	networksetup -setsocksfirewallproxystate "Wi-Fi" off
+	ssh -t mini bash -lic '"vpn -s disconnect"'
+	kp "ssh -D 8080"
+}
 
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
@@ -87,11 +98,6 @@ export PYTHONPATH=".:$PYTHONPATH"
 export PATH=".:/usr/local/bin:$PATH"
 export PATH="$PATH:/usr/local/spark/bin"
 export PATH="$PATH:/Users/bryan/.cargo/bin"
-
-
-# difftastic
-export GIT_EXTERNAL_DIFF=difft
-
 
 
 alias activate="source .VENV/bin/activate"

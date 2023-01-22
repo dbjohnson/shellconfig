@@ -3,3 +3,4 @@
 *.pyc
 .lein-repl-history
 build/*
+.devcontainer/*
