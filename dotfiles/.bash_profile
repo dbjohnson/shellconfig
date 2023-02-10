@@ -5,8 +5,8 @@ alias grep="grep --color"
 alias rm="rm -f"
 alias ls="ls -lah"
 alias find="find 2>/dev/null"
-alias vi="vim"
-alias vim="vim -v"
+alias vi="nvim"
+alias vim="nvim -v"
 alias diff="diff --side-by-side --suppress-common-lines --width=200"
 alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
@@ -76,10 +76,10 @@ function ssh-send-key {
 }
 
 function socks-proxy-mini {
-	networksetup -setsocksfirewallproxy "Wi-Fi" localhost 8080
-	ssh -D 8080 -f -C -q -N bryan@mini.local
 	# not sure why this hangs....
-	timeout 30 ssh -t mini bash -lic vpnup
+	timeout 30 ssh -t bryan@mini.local bash -lic vpnup
+	ssh -D 8080 -fCqN bryan@mini.local
+	networksetup -setsocksfirewallproxy "Wi-Fi" localhost 8080
 }
 
 function socks-open {
@@ -88,7 +88,7 @@ function socks-open {
 
 function socks-close {
 	networksetup -setsocksfirewallproxystate "Wi-Fi" off
-	ssh -t mini bash -lic '"vpn -s disconnect"'
+	ssh -t bryan@mini.local bash -lic '"vpn -s disconnect"'
 	kp "ssh -D 8080"
 }
 
@@ -98,6 +98,13 @@ export PYTHONPATH=".:$PYTHONPATH"
 export PATH=".:/usr/local/bin:$PATH"
 export PATH="$PATH:/usr/local/spark/bin"
 export PATH="$PATH:/Users/bryan/.cargo/bin"
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+export HOMEBREW_NO_AUTO_UPDATE=1;
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 
 alias activate="source .VENV/bin/activate"
@@ -108,13 +115,3 @@ if [ -f $CREDSFILE ]
 then
 	source $CREDSFILE 
 fi
-
-# let pysam build
-export HTSLIB_CONFIGURE_OPTIONS=--enable-plugins
-
-#eval "$(docker-machine env vbox)"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
-export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"

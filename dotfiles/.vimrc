@@ -31,6 +31,9 @@ set showcmd
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set nofoldenable
+set shell=/bin/zsh
+set splitright
+set splitbelow
 
 syntax on
 filetype plugin on
@@ -40,6 +43,7 @@ filetype indent on
 set nobackup
 set nowb
 set noswapfile
+
 highlight ColorColumn ctermbg=17
 highlight Search cterm=NONE ctermfg=white  ctermbg=blue
 highlight Error cterm=NONE ctermbg=darkred ctermfg=yellow
@@ -49,19 +53,20 @@ set whichwrap+=<,>,h,l
 " clipboard integration
 set clipboard=unnamed
 
-" map f to grep for word under cursor
-nnoremap f :grep! -r '\b<cword>\b' . <Bar> cw <CR><CR>
+" go into insert mode when opening a terminal
+autocmd TermOpen * startinsert | set nonu
+" close terminal buffer when terminal is closed
+autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
+" open a terminal, start ipython, bring cursor back to previous window
+nnoremap <C-i> :vsplit \| term source .VENV/bin/activate > /dev/null && ipython<CR><C-\><C-n><C-w><C-w>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim-Slime
+" Vim-Slime - send code to REPL in screen
 let g:slime_python_ipython = 1
-"let g:slime_target = "tmux"
-"let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
-let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
-""some keybindings don't work properly in a screen
+let g:slime_target = "neovim"
 
 " YouCompleteMe
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
@@ -69,8 +74,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 highlight Pmenu ctermfg=2 ctermbg=17
-au Filetype python nmap <leader>d :YcmCompleter GoToDefinition<cr> 
-au Filetype python nmap <leader>h :YcmCompleter GetDoc<cr><c-w><c-w>
+autocmd Filetype python nmap <leader>d :YcmCompleter GoToDefinition<cr> 
+autocmd Filetype python nmap <leader>h :YcmCompleter GetDoc<cr><c-w><c-w>
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -101,10 +106,10 @@ endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
 " vim-rainbow-parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+autocmd VimEnter * RainbowParenthesesToggle
+autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax * RainbowParenthesesLoadSquare
+autocmd Syntax * RainbowParenthesesLoadBraces
 
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
@@ -146,16 +151,16 @@ endif
 " LANGUAGES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python
-au BufWritePre *.py :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.py :retab        " convert tabs to spaces
+autocmd BufWritePre *.py :%s/\s\+$//e  " trim trailing whitespace
+autocmd BufWritePre *.py :retab        " convert tabs to spaces
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 
 " Clojure
-au Filetype clojure nmap <c-c><c-r> :w \| !lein exec % \| more<cr>
-au Filetype clojure let g:clojure_fuzzy_indent = 1
-au Filetype clojure let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
-au Filetype clojure set tabstop=2
-au BufNewFile,BufRead *.clj set filetype=clojure
+autocmd Filetype clojure nmap <c-c><c-r> :w \| !lein exec % \| more<cr>
+autocmd Filetype clojure let g:clojure_fuzzy_indent = 1
+autocmd Filetype clojure let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
+autocmd Filetype clojure set tabstop=2
+autocmd BufNewFile,BufRead *.clj set filetype=clojure
 function! TestToplevel() abort
     "Eval the toplevel clojure form (a deftest) and then test-var the
     "result."
@@ -167,7 +172,7 @@ function! TestToplevel() abort
     let result = fireplace#echo_session_eval("(clojure.test/test-var " . var . ")")
     return result
 endfunction
-au Filetype clojure nmap <c-c><c-t> :call TestToplevel()<cr>
+autocmd Filetype clojure nmap <c-c><c-t> :call TestToplevel()<cr>
 let g:clj_fmt_autosave = 1
 
 
@@ -180,41 +185,34 @@ endfunction
 nnoremap <leader>tab :call Tabfix()<cr>
 
 " HTML, js
-au BufWritePre *.js :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.js :retab        " convert tabs to spaces
-au BufWritePre *.jsx :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.jsx :retab        " convert tabs to spaces
+autocmd BufWritePre *.js :%s/\s\+$//e  " trim trailing whitespace
+autocmd BufWritePre *.js :retab        " convert tabs to spaces
+autocmd BufWritePre *.jsx :%s/\s\+$//e  " trim trailing whitespace
+autocmd BufWritePre *.jsx :retab        " convert tabs to spaces
 autocmd FileType javascript set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 autocmd FileType javascriptreact set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 
-au BufWritePre *.html :%s/\s\+$//e  " trim trailing whitespace
-au BufWritePre *.html :retab        " convert tabs to spaces
+autocmd BufWritePre *.html :%s/\s\+$//e  " trim trailing whitespace
+autocmd BufWritePre *.html :retab        " convert tabs to spaces
 autocmd FileType html set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 autocmd FileType htmldjango set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 
 
 """ NIGHTOWL! 
-""""" install
-
-" install with vim-plug
-"call plug#begin('~/.vim/plugged')
-"Plug 'haishanh/night-owl.vim'
-"call plug#end()
-
 """"" enable 24bit true color
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
-"if (has("termguicolors"))
-" set termguicolors
-"endif
+if (has("termguicolors"))
+ set termguicolors
+endif
 
 " For Neovim 0.1.3 and 0.1.4
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 """"" enable the theme
 
 syntax enable
-" colorscheme night-owl
+colorscheme night-owl
 
 " To enable the lightline theme
-"let g:lightline = { 'colorscheme': 'nightowl' }
+let g:lightline = { 'colorscheme': 'nightowl' }
