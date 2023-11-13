@@ -35,7 +35,7 @@ set shell=/bin/zsh
 set splitright
 set splitbelow
 
-syntax on
+" syntax on - disabling: sometimes messes with tabs
 filetype plugin on
 filetype indent on
 
@@ -54,19 +54,22 @@ set whichwrap+=<,>,h,l
 set clipboard=unnamed
 
 " go into insert mode when opening a terminal
-autocmd TermOpen * startinsert | set nonu
+autocmd TermOpen * startinsert | set nonu 
 " close terminal buffer when terminal is closed
 autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
 " open a terminal, start ipython, bring cursor back to previous window
-nnoremap <C-i> :vsplit \| term source .VENV/bin/activate > /dev/null && ipython<CR><C-\><C-n><C-w><C-w>
+" NOTE: this only makes sense when g:slime_target = "neovim"
+" nnoremap <C-i> :vsplit \| term source .VENV/bin/activate 2&>1 > /dev/null \|\| true && ipython<CR><C-\><C-n><C-w><C-w>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-Slime - send code to REPL in screen
 let g:slime_python_ipython = 1
-let g:slime_target = "neovim"
+" let g:slime_target = "neovim"
+let g:slime_target = "screen"
+let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
 
 " YouCompleteMe
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
@@ -208,11 +211,9 @@ endif
 
 " For Neovim 0.1.3 and 0.1.4
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme night-owl
 
 """"" enable the theme
-
-syntax enable
-colorscheme night-owl
 
 " To enable the lightline theme
 let g:lightline = { 'colorscheme': 'nightowl' }

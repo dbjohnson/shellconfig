@@ -39,5 +39,3 @@
 	postBuffer = 1048576000
 [url "git@github.com:"]
 	insteadOf = https://github.com/
-[diff]
-	external = difft

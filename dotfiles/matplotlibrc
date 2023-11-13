@@ -2,3 +2,5 @@ axes.grid       : True
 figure.figsize  : 12, 8
 #backend			: TkAgg
 backend			: macosx
+pdf.fonttype    : 42
+ps.fonttype     : 42

@@ -14,7 +14,8 @@ alias fortune="fortune|ponysay"
 alias dc="docker-compose"
 
 # Strata VPN
-alias vpn="/opt/cisco/anyconnect/bin/vpn"
+# alias vpn="/opt/cisco/anyconnect/bin/vpn"
+alias vpn="/opt/cisco/secureclient/bin/vpn"
 
 function vpnup {
 	if ! $(security show-keychain-info 2> /dev/null); then
@@ -29,12 +30,18 @@ function random {
 }
 
 # git
+function gipo {
+	main=$(git branch | egrep -o "master|main")
+	git checkout $main
+	git pull origin $main
+}
+
+
 alias gh="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gis="git status"
 alias gid="git diff --ignore-space-change"
 alias gic="git commit -am"
 alias gicu="git reset HEAD^"
-alias gipo="git checkout master; git pull origin master"
 alias gilog='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"  --all --decorate' #--oneline '
 alias gp="pull"
 alias reset="git reset --hard @{upstream}"
