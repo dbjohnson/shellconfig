@@ -7,9 +7,9 @@
     diff = auto
     status = auto
 [push]
-    default = simple
+    default = current
 [user]
-	name = Bryan Johnson\n
+	name = Bryan Johnson
 	email = d.bryan.johnson@gmail.com
 [filter "media"]
 	required = true
@@ -25,12 +25,18 @@
 	required = true
 [core]
 	excludesfile = ~/.gitignore
+[diff]
+	algorithm = histogram
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[merge]
+	conflictstyle = zdiff3
+[rebase]
+	autostash = true
 [rerere]
 	enabled = true
 [pull]

@@ -35,7 +35,7 @@ set shell=/bin/zsh
 set splitright
 set splitbelow
 
-" syntax on - disabling: sometimes messes with tabs
+syntax on # disabling: sometimes messes with tabs
 filetype plugin on
 filetype indent on
 
@@ -60,16 +60,19 @@ autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | end
 
 " open a terminal, start ipython, bring cursor back to previous window
 " NOTE: this only makes sense when g:slime_target = "neovim"
-" nnoremap <C-i> :vsplit \| term source .VENV/bin/activate 2&>1 > /dev/null \|\| true && ipython<CR><C-\><C-n><C-w><C-w>
+" nnoremap <S-n> :vsplit \| term ipython<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-Slime - send code to REPL in screen
 let g:slime_python_ipython = 1
-" let g:slime_target = "neovim"
 let g:slime_target = "screen"
-let g:slime_default_config = {"sessionname": "repl", "windowname": "0"}
+let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+let g:slime_dont_ask_default = 1
+vnoremap <C-c> :SlimeSend<CR>
+nnoremap <S-Enter> :SlimeSend<CR>
+vnoremap <S-Enter> :SlimeSend<CR>
 
 " YouCompleteMe
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
@@ -217,3 +220,13 @@ colorscheme night-owl
 
 " To enable the lightline theme
 let g:lightline = { 'colorscheme': 'nightowl' }
+
+
+" NERDtree
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-S-t> :NERDTreeFind<CR>
+" Start NERDTree and put the cursor back in the other window.
+" autocmd VimEnter * NERDTree | wincmd p
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif

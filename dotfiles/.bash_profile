@@ -12,6 +12,7 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias dc="docker-compose"
+alias ipy="screen -S ipython ipython"
 
 # Strata VPN
 # alias vpn="/opt/cisco/anyconnect/bin/vpn"
@@ -122,3 +123,4 @@ if [ -f $CREDSFILE ]
 then
 	source $CREDSFILE 
 fi
+. "$HOME/.cargo/env"
