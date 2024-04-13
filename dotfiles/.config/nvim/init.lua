@@ -12,6 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  "jpalardy/vim-slime",
   "oxfist/night-owl.nvim",
   "zbirenbaum/copilot.lua",
   "vim-syntastic/syntastic",
@@ -112,9 +113,19 @@ autocmd BufWritePre *.html :%s/\s\+$//e  " trim trailing whitespace
 autocmd BufWritePre *.html :retab        " convert tabs to spaces
 autocmd FileType html set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
 autocmd FileType htmldjango set tabstop=2|set softtabstop=2|set shiftwidth=2|set expandtab
-]])
 
-vim.cmd([[
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PLUGINS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim slime
+let g:slime_python_ipython = 1
+let g:slime_target = "screen"
+let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+let g:slime_dont_ask_default = 1
+vnoremap <C-c> :SlimeSend<CR>
+nnoremap <S-Enter> :SlimeSend<CR>
+vnoremap <S-Enter> :SlimeSend<CR>
 " Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
