@@ -1,6 +1,7 @@
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 alias python="python3"
+alias ipython="python3 -m IPython"
 alias grep="grep --color"
 alias rm="rm -f"
 alias ls="ls -lah"
@@ -116,6 +117,7 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 
 alias activate="source .VENV/bin/activate"
+source ~/.venv/bin/activate
 
 # local credentials
 CREDSFILE=$HOME/.credentials
@@ -123,4 +125,3 @@ if [ -f $CREDSFILE ]
 then
 	source $CREDSFILE 
 fi
-. "$HOME/.cargo/env"

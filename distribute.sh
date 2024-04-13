@@ -1,15 +1,11 @@
 #!/bin/bash
 
-dir=$PWD
-cd ~/
-
-for f in "$dir/dotfiles/".[a-z]*
+cd dotfiles
+for f in $(find . -type f)
 do
-    ln -s -f "$f" .
+	# make directories as needed
+	if [ "$(dirname "$f")" != "." ]; then
+		mkdir -p "~/$(dirname "$f")"
+	fi
+	ln -s -f "$(realpath $f)" ~
 done
-
-mkdir -p ~/.ipython/profile_default
-mkdir -p ~/.matplotlib
-ln -s -f "$dir/dotfiles/ipython_config.py" .ipython/profile_default/
-ln -s -f "$dir/dotfiles/matplotlibrc" .matplotlib/
-
