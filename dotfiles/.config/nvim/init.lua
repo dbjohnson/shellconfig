@@ -152,16 +152,10 @@ nnoremap <C-S-t> :NERDTreeFind<CR>
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " vim-airline
-function! AirlineInit()
-	let g:airline_powerline_fonts = 0
-	" disable those wonky arrows - they don't look right without special fonts
-	let g:airline_left_sep = ''
-	let g:airline_right_sep = ''
-	let g:airline_section_warning = airline#section#create(['syntastic'])
-	let g:airline_exclude_preview = 1
-	let g:airline_section_y = ''  " don't care about encoding
-endfunction
-autocmd User AirlineAfterInit call AirlineInit()
+let g:airline_powerline_fonts = 1
+let g:airline_exclude_preview = 0
+let g:airline_section_y = ''  " don't care about encoding
+let g:airline#extensions#tabline#enabled = 1
 
 " vim-rainbow-parentheses
 let g:rainbow_active = 1
