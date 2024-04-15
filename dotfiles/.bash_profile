@@ -15,6 +15,25 @@ alias fortune="fortune|ponysay"
 alias dc="docker-compose"
 alias ipy="screen -S ipython ipython"
 
+function re_pair() {
+  id=`blueutil --paired | grep -i $1 | grep -Eo '[a-z0-9]{2}(-[a-z0-9]{2}){5}'`
+  name=`blueutil --paired | grep -i $1 | grep -Eo 'name: "\S+"'`
+  echo "unpairing with BT device $id, $name"
+  blueutil --unpair "$id"
+  echo "unpaired, waiting a few seconds for $1 to go to pairable state"
+  sleep 3
+  echo "pairing with BT device $id, $name"
+  blueutil --pair "$id" "0000"
+  echo "paired"
+  blueutil --connect "$id"
+  echo "connected"
+}
+
+function re_pair_all() {
+	re_pair "keyboard"
+	re_pair "trackpad"
+}
+
 # Strata VPN
 # alias vpn="/opt/cisco/anyconnect/bin/vpn"
 alias vpn="/opt/cisco/secureclient/bin/vpn"
