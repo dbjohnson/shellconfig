@@ -15,23 +15,31 @@ alias fortune="fortune|ponysay"
 alias dc="docker-compose"
 alias ipy="screen -S ipython ipython"
 
+
+function get_bluetooth_id() {
+  return `blueutil --paired | grep -i $1 | grep -Eo '[a-z0-9]{2}(-[a-z0-9]{2}){5}'`
+}
+
 function re_pair() {
-  id=`blueutil --paired | grep -i $1 | grep -Eo '[a-z0-9]{2}(-[a-z0-9]{2}){5}'`
   name=`blueutil --paired | grep -i $1 | grep -Eo 'name: "\S+"'`
-  echo "unpairing with BT device $id, $name"
-  blueutil --unpair "$id"
-  echo "unpaired, waiting a few seconds for $1 to go to pairable state"
-  sleep 3
-  echo "pairing with BT device $id, $name"
-  blueutil --pair "$id" "0000"
+  if [ -z "$name" ] 
+  then
+    echo "unpairing with BT device $1, $name"
+    blueutil --unpair "$1"
+    echo "unpaired, waiting a few seconds for $1 to go to pairable state"
+    sleep 3
+  fi
+  echo "pairing with BT device $1"
+  blueutil --pair "$1" "0000"
   echo "paired"
-  blueutil --connect "$id"
-  echo "connected"
+  blueutil --connect "$1"
 }
 
 function re_pair_all() {
-	re_pair "keyboard"
-	re_pair "trackpad"
+	# keyboard
+	re_pair "e4-50-eb-f1-08-f4"
+	# trackpad
+	re_pair "18-3f-70-ed-d8-55"
 }
 
 # Strata VPN
