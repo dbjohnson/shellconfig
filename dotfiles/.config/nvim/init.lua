@@ -76,7 +76,7 @@ set whichwrap+=<,>,h,l
 set clipboard=unnamed
 
 " go into insert mode when opening a terminal
-autocmd TermOpen * startinsert | set nonu 
+autocmd TermOpen * startinsert | set nonu
 " close terminal buffer when terminal is closed
 autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
@@ -155,6 +155,9 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 let g:airline_powerline_fonts = 1
 let g:airline_exclude_preview = 0
 let g:airline_section_y = ''  " don't care about encoding
+let g:airline_symbols.linenr = ' l:'
+let g:airline_symbols.colnr = ' c:'
+let g:airline_symbols.maxlinenr = ''
 let g:airline#extensions#tabline#enabled = 1
 
 " vim-rainbow-parentheses
