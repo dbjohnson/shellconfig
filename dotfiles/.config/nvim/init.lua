@@ -15,13 +15,14 @@ require("lazy").setup({
   "jpalardy/vim-slime",
   "oxfist/night-owl.nvim",
   "zbirenbaum/copilot.lua",
+  "github/copilot.vim",
   "vim-syntastic/syntastic",
   "vim-airline/vim-airline",
   "preservim/nerdtree",
   "frazrepo/vim-rainbow"
 })
 
-require("copilot").setup(options)
+require("copilot").setup()
 
 vim.cmd([[
 au!
