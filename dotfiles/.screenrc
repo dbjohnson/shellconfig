@@ -4,3 +4,5 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 escape ^Bb
 msgwait 0 
 msgminwait 0
+scrollback 1000
+bufferfile ~/.slime_paste

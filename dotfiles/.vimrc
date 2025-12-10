@@ -70,6 +70,7 @@ let g:slime_python_ipython = 1
 let g:slime_target = "screen"
 let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
 let g:slime_dont_ask_default = 1
+let g:slime_paste_file = "$HOME/.slime_paste"
 vnoremap <C-c> :SlimeSend<CR>
 nnoremap <S-Enter> :SlimeSend<CR>
 vnoremap <S-Enter> :SlimeSend<CR>
