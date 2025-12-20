@@ -54,3 +54,5 @@ theme = iTerm2 Dark Background
 font-thicken = true
 window-padding-x = 10
 window-padding-y = 10
+focus-follows-mouse = true
+split-divider-color = #333333
