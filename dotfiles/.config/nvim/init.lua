@@ -1,17 +1,17 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -21,13 +21,13 @@ vim.g.maplocalleader = "\\"
 
 -- Setup Lazy.nvim with LazyVim AND your custom plugins
 require("lazy").setup({
-  spec = {
-    -- 1. Load LazyVim Core (This restores Neo-tree, Dashboard, etc.)
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+	spec = {
+		-- 1. Load LazyVim Core (This restores Neo-tree, Dashboard, etc.)
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
-    -- 2. Import your plugins (We will create this file next)
-    { import = "plugins" },
-  },
-  install = { colorscheme = { "night-owl", "habamax" } },
-  checker = { enabled = true },
+		-- 2. Import your plugins (We will create this file next)
+		{ import = "plugins" },
+	},
+	install = { colorscheme = { "night-owl", "habamax" } },
+	checker = { enabled = true, notify = false },
 })
