@@ -1,7 +1,7 @@
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-alias python="python3"
-alias ipython="python3 -m IPython"
+alias python="uv tool run python"
+alias ipython="uv tool run ipython"
 alias grep="grep --color"
 alias rm="rm -f"
 alias ls="ls -lah"
@@ -13,47 +13,8 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias dc="docker compose"
-alias ipython="uv tool run ipython"
 alias ipy="screen -S ipython ipython"
 
-
-function get_bluetooth_id() {
-  return `blueutil --paired | grep -i $1 | grep -Eo '[a-z0-9]{2}(-[a-z0-9]{2}){5}'`
-}
-
-function re_pair() {
-  name=`blueutil --paired | grep -i $1 | grep -Eo 'name: "\S+"'`
-  if [ -z "$name" ] 
-  then
-    echo "unpairing with BT device $1, $name"
-    blueutil --unpair "$1"
-    echo "unpaired, waiting a few seconds for $1 to go to pairable state"
-    sleep 3
-  fi
-  echo "pairing with BT device $1"
-  blueutil --pair "$1" "0000"
-  echo "paired"
-  blueutil --connect "$1"
-}
-
-function re_pair_all() {
-	# keyboard
-	re_pair "e4-50-eb-f1-08-f4"
-	# trackpad
-	re_pair "18-3f-70-ed-d8-55"
-}
-
-# Strata VPN
-# alias vpn="/opt/cisco/anyconnect/bin/vpn"
-alias vpn="/opt/cisco/secureclient/bin/vpn"
-
-function vpnup {
-	if ! $(security show-keychain-info 2> /dev/null); then
-		security unlock-keychain;
-	fi
-	PSWD=$(security find-generic-password -a ${USER} -s stratavpn -w)
-	printf 'bryan.johnson\n%s\npush' "$PSWD" | vpn -s connect sslvpn.strataoncology.com
-}
 
 function random {
   openssl rand -base64 $1
@@ -111,26 +72,6 @@ function ssh-send-key {
   ssh $host 'test -d $HOME/.ssh || mkdir -m 0700 $HOME/.ssh && test -f $HOME/.ssh/authorized_keys || touch $HOME/.ssh/authorized_keys; chmod 600 $HOME/.ssh/authorized_keys && cat >>$HOME/.ssh/authorized_keys' <$pubkey
 }
 
-<<<<<<< HEAD
-||||||| parent of e2843b8 (update)
-function socks-proxy-mini {
-	# not sure why this hangs....
-	timeout 30 ssh -t bryan@mini.local bash -lic vpnup
-	ssh -D 8080 -fCqN bryan@mini.local
-	networksetup -setsocksfirewallproxy "Wi-Fi" localhost 8080
-}
-
-function socks-open {
-	socks-proxy-mini
-}
-
-function socks-close {
-	networksetup -setsocksfirewallproxystate "Wi-Fi" off
-	ssh -t bryan@mini.local bash -lic '"vpn -s disconnect"'
-	kp "ssh -D 8080"
-}
-
-=======
 function socks-proxy-mini {
   # not sure why this hangs....
   timeout 30 ssh -t bryan@mini.local bash -lic vpnup
@@ -148,7 +89,7 @@ function socks-close {
   kp "ssh -D 8080"
 }
 
->>>>>>> e2843b8 (update)
+
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export PYTHONPATH=".:./src:$PYTHONPATH"
