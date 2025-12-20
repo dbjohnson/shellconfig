@@ -3,7 +3,6 @@ from importlib import reload
 
 try:
     import pandas as pd
-    import plotly.express as px
     from matplotlib import pyplot as plt
     import numpy as np
     pd.set_option('display.max_rows', 500)

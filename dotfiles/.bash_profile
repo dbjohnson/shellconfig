@@ -1,7 +1,8 @@
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-alias python="uv tool run python"
-alias ipython="uv tool run ipython"
+alias python="uv run python"
+alias ipython="uv run ipython"
+alias pip="uv pip"
 alias grep="grep --color"
 alias rm="rm -f"
 alias ls="ls -lah"
@@ -109,7 +110,8 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 # https://github.com/Kozea/WeasyPrint/issues/2427#issuecomment-2845051857
 export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
 
-alias activate="source .VENV/bin/activate"
+alias activate="source .venv/bin/activate"
+source ~/.venv/bin/activate
 
 # local credentials
 CREDSFILE=$HOME/.credentials
