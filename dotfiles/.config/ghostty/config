@@ -50,4 +50,7 @@
 keybind = cmd+s=new_split:right
 keybind = cmd+h=new_split:down
 background = #000000
-theme = Night Owl
+theme = iTerm2 Dark Background
+font-thicken = true
+window-padding-x = 10
+window-padding-y = 10
