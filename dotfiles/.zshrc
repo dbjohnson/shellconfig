@@ -20,3 +20,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 . "$HOME/.local/bin/env"
+
+# opencode
+export PATH=/Users/bryan/.opencode/bin:$PATH
+
+# Disable virtualenv indicator in prompt
+export PROMPT=${PROMPT/\$\(virtenv_prompt\)/}
