@@ -31,3 +31,6 @@ require("lazy").setup({
 	install = { colorscheme = { "night-owl", "habamax" } },
 	checker = { enabled = true, notify = false },
 })
+
+vim.opt.number = true
+vim.opt.relativenumber = false
