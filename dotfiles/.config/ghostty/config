@@ -47,6 +47,7 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-background = #000000
 keybind = cmd+s=new_split:right
 keybind = cmd+h=new_split:down
+background = #000000
+theme = Night Owl
