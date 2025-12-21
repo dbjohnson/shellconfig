@@ -26,3 +26,6 @@ export PATH=/Users/bryan/.opencode/bin:$PATH
 
 # Disable virtualenv indicator in prompt
 export PROMPT=${PROMPT/\$\(virtenv_prompt\)/}
+
+# move unsightly completion files
+export ZSH_COMPDUMP=${ZSH_COMPDUMP/${HOME}/${HOME}\/.cache}

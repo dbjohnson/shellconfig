@@ -2,6 +2,8 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 alias python="uv run python"
 alias ipython="uv run ipython"
+alias ip="uv run ipython"
+alias ips="screen -S ipython ipython"
 alias pip="uv pip"
 alias grep="grep --color"
 alias rm="rm -f"
@@ -14,8 +16,6 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias dc="docker compose"
-alias ipy="screen -S ipython ipython"
-
 
 function random {
   openssl rand -base64 $1
@@ -89,7 +89,6 @@ function socks-close {
   ssh -t bryan@mini.local bash -lic '"vpn -s disconnect"'
   kp "ssh -D 8080"
 }
-
 
 # path, etc
 export PYTHONSTARTUP="$HOME/.pythonrc"
