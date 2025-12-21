@@ -49,10 +49,15 @@
 # resize-overlay-duration = 4s 200ms
 keybind = cmd+s=new_split:right
 keybind = cmd+h=new_split:down
-background = #000000
-theme = iTerm2 Dark Background
+theme = Night Owl
 font-thicken = true
 window-padding-x = 10
 window-padding-y = 10
 focus-follows-mouse = true
 split-divider-color = #333333
+background-opacity = 0.8
+background-blur-radius = 5
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+auto-update = download
+mouse-hide-while-typing = true
