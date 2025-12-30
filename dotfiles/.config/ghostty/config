@@ -61,3 +61,6 @@ font-family = "JetBrainsMono Nerd Font"
 font-size = 13
 auto-update = download
 mouse-hide-while-typing = true
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
