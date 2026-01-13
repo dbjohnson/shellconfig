@@ -110,7 +110,6 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
 
 alias activate="source .venv/bin/activate"
-source ~/.venv/bin/activate
 
 # local credentials
 CREDSFILE=$HOME/.credentials

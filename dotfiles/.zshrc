@@ -29,3 +29,5 @@ export PROMPT=${PROMPT/\$\(virtenv_prompt\)/}
 
 # move unsightly completion files
 export ZSH_COMPDUMP=${ZSH_COMPDUMP/${HOME}/${HOME}\/.cache}
+
+source ~/.venv/bin/activate
