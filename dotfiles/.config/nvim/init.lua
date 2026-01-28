@@ -34,3 +34,10 @@ require("lazy").setup({
 
 vim.opt.number = true
 vim.opt.relativenumber = false
+
+-- Autoread
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { '*' },
+})

@@ -31,3 +31,11 @@ export PROMPT=${PROMPT/\$\(virtenv_prompt\)/}
 export ZSH_COMPDUMP=${ZSH_COMPDUMP/${HOME}/${HOME}\/.cache}
 
 source ~/.venv/bin/activate
+
+# pnpm
+export PNPM_HOME="/Users/bryan/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
