@@ -17,4 +17,8 @@ return {
   },
   { "github/copilot.vim" },
   { "frazrepo/vim-rainbow" },
+  {
+    "nvim-mini/mini.pairs",
+    enabled = false,
+  },
 }
