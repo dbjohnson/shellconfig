@@ -16,6 +16,7 @@ alias weather="curl http://wttr.in/ann%20arbor"
 alias moon="curl http://wttr.in/moon"
 alias fortune="fortune|ponysay"
 alias dc="docker compose"
+alias codex="ollama launch codex-app --model qwen3.6:27b-coding-nvfp4"
 
 function random {
   openssl rand -base64 $1
