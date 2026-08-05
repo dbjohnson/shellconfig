@@ -31,6 +31,9 @@ require("lazy").setup({
 
     -- 2. Import your plugins (We will create this file next)
     { import = "plugins" },
+
+    -- 3. Python support (LSP, formatting, proper indentation)
+    { import = "lazyvim.plugins.extras.lang.python" },
   },
   install = { colorscheme = { "night-owl", "habamax" } },
   checker = { enabled = true, notify = false },
