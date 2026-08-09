@@ -29,11 +29,11 @@ require("lazy").setup({
     -- 1. Load LazyVim Core (This restores Neo-tree, Dashboard, etc.)
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
-    -- 2. Import your plugins (We will create this file next)
-    { import = "plugins" },
-
-    -- 3. Python support (LSP, formatting, proper indentation)
+    -- 2. Python support (extras must come before your own plugins)
     { import = "lazyvim.plugins.extras.lang.python" },
+
+    -- 3. Import your plugins (must be last)
+    { import = "plugins" },
   },
   install = { colorscheme = { "night-owl", "habamax" } },
   checker = { enabled = true, notify = false },
