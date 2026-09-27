@@ -1,6 +1,6 @@
 # Use a distinct theme over SSH so remote shells are easy to tell apart.
 if [[ -n $SSH_CONNECTION ]]; then
-  ZSH_THEME="${ZSH_THEME:-bira}"
+  ZSH_THEME="${ZSH_THEME:-jonathan}"
 else
   ZSH_THEME="${ZSH_THEME:-ys}"
 fi
