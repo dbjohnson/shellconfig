@@ -5,24 +5,24 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 setopt no_share_history
 unsetopt inc_append_history
 unsetopt share_history
-plugins=(git brew python pip)
+plugins=(git python pip)
+[[ "$OSTYPE" == darwin* ]] && plugins+=(brew)
 
 export EDITOR=vim
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export ZSH=~/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 source ~/.bash_profile
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+[[ "$OSTYPE" == darwin* ]] && export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # opencode
-export PATH=/Users/bryan/.opencode/bin:$PATH
+[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
 
 # Disable virtualenv indicator in prompt
 export PROMPT=${PROMPT/\$\(virtenv_prompt\)/}
@@ -30,19 +30,25 @@ export PROMPT=${PROMPT/\$\(virtenv_prompt\)/}
 # move unsightly completion files
 export ZSH_COMPDUMP=${ZSH_COMPDUMP/${HOME}/${HOME}\/.cache}
 
-source ~/.venv/bin/activate
+[ -f ~/.venv/bin/activate ] && source ~/.venv/bin/activate
 
 # pnpm
-export PNPM_HOME="/Users/bryan/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+if [[ "$OSTYPE" == darwin* ]]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+fi
 # pnpm end
 
 # bun completions
-[ -s "/Users/bryan/.bun/_bun" ] && source "/Users/bryan/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+[ -d "$BUN_INSTALL/bin" ] && export PATH="$BUN_INSTALL/bin:$PATH"
+
+# user-local bin + mise (claude, etc.)
+export PATH="$HOME/.local/bin:$PATH"
+command -v mise >/dev/null && eval "$(mise activate zsh)"

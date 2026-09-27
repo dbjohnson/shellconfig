@@ -93,20 +93,21 @@ function socks-close {
 export PYTHONSTARTUP="$HOME/.pythonrc"
 export PYTHONPATH=".:./src:$PYTHONPATH"
 export PATH=".:/usr/local/bin:$PATH"
-export PATH=".:/usr/.local/bin:$PATH"
-export PATH="$PATH:/usr/local/spark/bin"
-export PATH="$PATH:/Users/bryan/.cargo/bin"
-export HOMEBREW_PREFIX="/opt/homebrew"
-export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-export HOMEBREW_REPOSITORY="/opt/homebrew"
-export HOMEBREW_NO_AUTO_UPDATE=1
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
-export PATH="/Users/bryan/android-platform/${PATH+:$PATH}"
-export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
-export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-# needed for weasyprint
-# https://github.com/Kozea/WeasyPrint/issues/2427#issuecomment-2845051857
-export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
+[ -d /usr/local/spark/bin ] && export PATH="$PATH:/usr/local/spark/bin"
+[ -d "$HOME/.cargo/bin" ] && export PATH="$PATH:$HOME/.cargo/bin"
+if [[ "$OSTYPE" == darwin* ]]; then
+  export HOMEBREW_PREFIX="/opt/homebrew"
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+  export HOMEBREW_REPOSITORY="/opt/homebrew"
+  export HOMEBREW_NO_AUTO_UPDATE=1
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+  export PATH="$HOME/android-platform/${PATH+:$PATH}"
+  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+  # needed for weasyprint
+  # https://github.com/Kozea/WeasyPrint/issues/2427#issuecomment-2845051857
+  export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
+fi
 
 alias activate="source .venv/bin/activate"
 
@@ -116,7 +117,7 @@ if [ -f $CREDSFILE ]; then
   source $CREDSFILE
 fi
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 function conda-init {
   deactivate # deactivate current venv
