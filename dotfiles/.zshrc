@@ -1,4 +1,9 @@
-ZSH_THEME="ys"
+# Use a distinct theme over SSH so remote shells are easy to tell apart.
+if [[ -n $SSH_CONNECTION ]]; then
+  ZSH_THEME="${ZSH_THEME:-bira}"
+else
+  ZSH_THEME="${ZSH_THEME:-ys}"
+fi
 ENABLE_CORRECTION="false"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
