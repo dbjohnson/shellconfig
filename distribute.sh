@@ -1,13 +1,12 @@
-# /bin/bash
+#!/bin/bash
+set -euo pipefail
 
-cd dotfiles
-for f in $(find . -type f)
-do
+cd "$(dirname "$0")/dotfiles"
+find . -type f -print0 | while IFS= read -r -d '' f; do
+	f="${f#./}"
+	dest="$HOME/$f"
 	# make directories as needed
-	if [ "$(dirname "$f")" != "." ]; then
-		mkdir -p "~/$(dirname "$f")"
-	fi
-	ln -s -f "$(realpath $f)" "$(realpath ~)/$f"
-	echo $f
-	echo $(ls -l "$(realpath ~)/$f")
+	mkdir -p "$(dirname "$dest")"
+	ln -sfn "$PWD/$f" "$dest"
+	ls -l "$dest"
 done
