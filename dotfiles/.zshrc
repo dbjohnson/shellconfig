@@ -13,7 +13,7 @@ unsetopt share_history
 plugins=(git python pip)
 [[ "$OSTYPE" == darwin* ]] && plugins+=(brew)
 
-export EDITOR=vim
+export EDITOR=nvim
 export ZSH=~/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 source ~/.bash_profile
